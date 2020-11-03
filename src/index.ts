@@ -27,8 +27,10 @@ const main = async () => {
       shortURL: providedURL,
     });
     if (!requiredURL) {
-      return res.status(400);
+      return res.status(400).send("NOT FOUND");
     }
+    requiredURL.visits++;
+    orm.em.persistAndFlush(requiredURL);
     return res.redirect(requiredURL?.longURL);
   });
 
